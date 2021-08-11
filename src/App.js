@@ -6,6 +6,14 @@ import Details from './Details';
 import NotFound from './NotFound';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+/*
+  To set up de local database, run on a diferent terminal the following:
+
+  npx json-server --watch data/db.json --port 8000
+  
+  This way you can start using the app
+*/
+
 function App() {
   return (
     <Router>
