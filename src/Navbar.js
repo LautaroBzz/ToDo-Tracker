@@ -7,7 +7,7 @@ const Navbar = () => {
       <h1>A Basic To Do List (Using React)</h1>
       <div className="links">
         <Link to="/">Home</Link>     
-        <Link to="/create">Add New</Link>
+        <Link to="/create">Add</Link>
       </div>
     </nav>
   );
