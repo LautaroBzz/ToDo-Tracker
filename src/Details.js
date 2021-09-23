@@ -4,15 +4,16 @@ import useFetch from "./useFetch";
 
 const Details = () => {
   const { id } = useParams();
-  const { data: toDo, isLoading, error } = useFetch('http://localhost:8000/db/' + id);
 
-  const backToHome = useHistory();
+  const { data, isLoading, error } = useFetch('http://localhost:8000/db/' + id);
+
+  const history = useHistory();
 
   const handleClick = () => {
-    fetch('http://localhost:8000/db/' + toDo.id, {
+    fetch('http://localhost:8000/db/' + data.id, {
       method: "DELETE"
     }).then(() => {
-      backToHome.push("/");
+      history.push("/");
     })
   };
 
@@ -20,11 +21,11 @@ const Details = () => {
     <div className="blog-details">
       { isLoading && <div>Loading...</div> }
       { error && <div>{ error }</div> }
-      { toDo && (
+      { data && (
         <article>
-          <h2> {toDo.title} </h2>
-          <p> Written by {toDo.author} </p>
-          <div> {toDo.body} </div>
+          <h2> {data.title} </h2>
+          <p> Written by {data.author} </p>
+          <div> {data.body} </div>
           <button onClick={handleClick}>Delete</button>
         </article>
       )}

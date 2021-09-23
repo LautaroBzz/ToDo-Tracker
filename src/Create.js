@@ -5,27 +5,23 @@ import { useHistory } from "react-router-dom";
 const Create = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [author, setAuthor] = useState("You of course...");
+  const [author, setAuthor] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const backToHome = useHistory();
+  const history = useHistory();
 
-  // prevent loss of data when refresing page
-  const handleSubmit = (event) => {
-    event.preventDefault();   
-
-    const toDo = {title, body, author};
+  const handleSubmit = (e) => {
+    e.preventDefault();   
+    const toDo = { title, body, author };
     setIsLoading(true);
-
     fetch('http://localhost:8000/db', {
       method: "POST",
+      body: JSON.stringify(toDo),
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(toDo)
     }).then(() => {
       console.log("New toDo Added");
       setIsLoading(false);
-      // take me to "Home" after adding new ToDo...
-      backToHome.push("/");
+      history.push("/");
     })
   };
 
@@ -54,13 +50,13 @@ const Create = () => {
         ></textarea>
 
         <label>From: </label>
-        <select 
+        <input
+          type='text'
+          required
+          placeholder='Who wrote that tedious task??'
           value={author} 
-          onChange={(e) => setAuthor(e.target.value)}>
-          <option value='x'>A</option>
-          <option value='y'>B</option>
-          <option value='z'>C</option>
-        </select>
+          onChange={(e) => setAuthor(e.target.value)}
+        />
 
         { !isLoading && <button>Add</button> }
         { isLoading && <button>Adding...</button> }
